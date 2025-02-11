@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Treino</title>
+
+  <!-- Material Icons -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+
+  <!-- Links -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <nav></nav>
+
+  <main>
+    <section class="dashboard">
+      <nav>
+        <div class="contagem">
+            <div class="progress-circle">
+                <svg viewBox="0 0 100 100">
+                    <circle class="background" cx="50" cy="50" r="45"></circle>
+                    <circle class="progress" cx="50" cy="50" r="45"></circle>
+                </svg>
+                <span id="NumeroDia">1</span>
+            </div>
+        </div>
+        <div class="usuario">
+            <img src="https://avatars.githubusercontent.com/u/141935869?v=4" alt="Usuário">
+        </div>
+    </nav>
+
+      <div class="criarTreino">
+        <button id="btnCriarTreino">
+          <span class="material-symbols-outlined">add</span>
+        </button>
+        <p>Crie e salve seus próprios treinos</p>
+      </div>
+    </section>
+
+  
+
+    <!-- Treinos (escondido por padrão) -->
+    <section class="Treinos">
+      <nav>
+        <button class="back" id="btnVoltar">
+          <span class="material-symbols-outlined">keyboard_backspace</span>
+        </button>
+        <p>SEUS TREINOS</p>
+        <button id="BotãoAbrirModalCriarTreino" class="add">
+          <span class="material-symbols-outlined">add</span>
+        </button>
+      </nav>
+
+      <main>
+
+        <div class="input">
+          <span class="material-symbols-outlined">
+            search
+          </span>
+          <input type="text" placeholder="Buscar">
+        </div>
+
+      </main>
+    </section>
+
+    <!-- Modal Criar Treino -->
+    <section class="Modal-Treinos" style="display: none">
+      <div class="modal">
+        <div class="informacoes">
+          <input placeholder="SEGUNDA-FEIRA" type="text" id="nometreino" />
+        </div>
+
+        <div class="gruposMuscularesTreino">
+          <button id="Peito"><img src="/Main/img/Peito-icone.svg" alt="Peito"></button>
+          <button id="Costas"><img src="/Main/img/Costas-icone.svg" alt="Costas"></button>
+          <button id="Biceps"><img src="/Main/img/Biceps-icone.svg" alt="Bíceps"></button>
+          <button id="Triceps"><img src="/Main/img/Triceps-icone.svg" alt="Tríceps"></button>
+          <button id="Ombro"><img src="/Main/img/Ombro-icone.svg" alt="Ombro"></button>
+          <button id="Quadriceps"><img src="/Main/img/Quadriceps-icone.svg" alt="Quadríceps"></button>
+          <button id="Posterior"><img src="/Main/img/Posterior-icone.svg" alt="Posterior de Coxa"></button>
+          <button id="Panturrilha"><img src="/Main/img/Panturrilha-icone.svg" alt="Panturrilha"></button>
+          <button id="Abdomen"><img src="/Main/img/Abdomen-icone.svg" alt="Abdômen"></button>
+          <button id="Gluteo"><img src="/Main/img/Gluteo-icone.svg"></button>
+        </div>
+      
+        <div class="botoes">
+          <button class="botao" id="BotãoCriarNovoTreino">CRIAR TREINO</button>
+          <button class="botao" id="botãoFecharModalCriarNovoTreino">VOLTAR</button>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <section>
+        <div class="exerciciosDisponiveis" style="display: none;">
+          <nav>
+            <button class="back" id="btnVoltarExercicioDisponiveis">
+              <span class="material-symbols-outlined">keyboard_backspace</span>
+            </button>
+            <p>SEUS TREINOS</p>
+            <button class="add" id="CriarNovoExercicio">
+              <span class="material-symbols-outlined">add</span>
+            </button>
+          </nav>
+
+          <div class="texto-grupo-muscular">
+            <h6>GRUPOS MUSCULARES</h6>
+          </div>
+
+          <div class="gruposMusculares">
+            <button class="Peito" id="Peito">
+              <img src="/Main/img/Peito-icone.svg" alt="">
+            </button>
+            <button class="Ombro" id="Ombro">
+              <img src="/Main/img/Ombro-icone.svg" alt="">
+            </button>
+            <button class="Biceps" id="Biceps">
+              <img src="/Main/img/Biceps-icone.svg" alt="Bíceps">
+            </button>
+            <button class="Triceps" id="Triceps">
+              <img src="/Main/img/Triceps-icone.svg" alt="">
+            </button>
+            <button class="Costas" id="Costas">
+              <img src="/Main/img/Costas-icone.svg" alt="">
+            </button>
+            <button class="Abdomen" id="Abdomen">
+              <img src="/Main/img/Abdomen-icone.svg" alt="">
+            </button>
+            <button class="Perna" id="Quadriceps">
+              <img src="/Main/img/Quadriceps-icone.svg" alt="">
+            </button>
+            <button class="Perna" id="Posterior">
+              <img src="/Main/img/Posterior-icone.svg" alt="">
+            </button>
+            <button class="Perna" id="Panturrilha">
+              <img src="/Main/img/Panturrilha-icone.svg" alt="">
+            </button>
+          </div>
+
+          <div id="ProcurarExercicios" class="input">
+            <span class="material-symbols-outlined">
+              search
+            </span>
+            <input type="text" placeholder="Buscar">
+          </div>
+
+          <div class="lista-exercicios">
+          </div>
+
+          <!-- IDs adicionados para os botões -->
+        </div>
+      </section>
+
+      <!-- Modal de Edição de Exercício -->
+      <div class="modal-editar-exercicio" id="modalEditarExercicio" style="display: none;">
+        <div class="modal-content" id="EdicaoDePesos">
+          <h2>Editar Exercício</h2>
+
+          <div class="input-container">
+            <input type="number" id="seriesInput" min="1" placeholder="3">
+            <span class="input-label">Séries</span>
+          </div>
+
+          <div class="input-container">
+            <input type="number" id="repsInput" min="1" placeholder="12">
+            <span class="input-label">Repetições</span>
+          </div>
+
+          <div class="input-container">
+            <input type="number" id="kgsInput" min="0" placeholder="40">
+            <span class="input-label">Kg</span>
+          </div>
+
+          <button id="salvarEdicao">Salvar</button>
+          <button id="fecharModalEdicao">Fechar</button>
+        </div>
+      </div>
+
+      <!-- Modal Criar Novo Exercício -->
+      <div class="modal-criar-exercicio" id="modalCriarExercicio" style="display: none;">
+        <div class="modal-content">
+          <h2>Criar Novo Exercício</h2>
+
+          <label for="nomeExercicio">Nome do Exercício</label>
+          <input class="input" type="text" id="nomeExercicio" placeholder="Digite o nome">
+
+          <label for="equipamentoExercicio">Equipamento</label>
+          <select id="equipamentoExercicio">
+            <option value="BARRA">Barra</option>
+            <option value="MAQUINA">Máquina</option>
+            <option value="HALTER">Halter</option>
+            <option value="CORPO LIVRE">Corpo Livre</option>
+          </select>
+
+          <label for="grupoMuscularExercicio">Grupo Muscular</label>
+          <select id="grupoMuscularExercicio">
+            <option value="Peito">Peito</option>
+            <option value="Ombro">Ombro</option>
+            <option value="Biceps">Bíceps</option>
+            <option value="Triceps">Tríceps</option>
+            <option value="Costas">Costas</option>
+            <option value="Abdomen">Abdômen</option>
+            <option value="Perna">Perna</option>
+          </select>
+
+          <label for="uploadGif" class="upload-container">
+            <span class="material-symbols-outlined" id="uploadIcon">upload</span> 
+            <span id="uploadText">Selecione um arquivo GIF</span>
+          </label>
+          <input type="file" id="uploadGif" accept="image/gif" style="display: none;">
+
+          <button id="salvarExercicio">Criar Exercício</button>
+          <button id="fecharModalExercicioAdicionarExercicio">Fechar</button>
+        </div>
+      </div>
+
+      <!-- Modal de Configurações -->
+<div id="modalConfiguracoes" class="modal-configuracoes">
+  <div class="modal-content">
+      <h2>Configurações</h2>
+      
+      <!-- Upload de imagem -->
+      <div class="upload-container" id="uploadContainer">
+          <label for="uploadImagem" class="upload-label">
+              <img id="previewImagem" src="https://avatars.githubusercontent.com/u/141935869?v=4" alt="Avatar">
+              <span class="trocar-imagem">Alterar Imagem</span>
+          </label>
+          <input type="file" id="uploadImagem" accept="image/*">
+      </div>
+
+      <!-- Nome de Usuário -->
+      <label for="nomeUsuario">Nome de Usuário:</label>
+      <input type="text" id="nomeUsuario" placeholder="Digite seu nome">
+
+      <!-- E-mail -->
+      <label for="emailUsuario">Endereço de E-mail:</label>
+      <input type="email" id="emailUsuario" placeholder="Digite seu e-mail">
+
+      <!-- Tema -->
+      <label for="tema">Tema:</label>
+      <select id="tema">
+          <option value="claro">Claro</option>
+          <option value="escuro">Escuro</option>
+      </select>
+
+      <!-- Botões -->
+      <div class="botoes">
+          <button id="salvarConfiguracoes">Salvar</button>
+          <button id="fecharConfiguracoes">Fechar</button>
+      </div>
+  </div>
+</div>
+
+
+  </main>
+
+  <!-- Script -->
+  <script type="module" src="script.js"></script>
+</body>
+
+</html>
