@@ -1111,21 +1111,27 @@ if (Array.isArray(treino.exercicios) && treino.exercicios.length > 0) {
       novoExercicio.setAttribute("data-id", exercicio.id);
 
       novoExercicio.innerHTML = `
-        <div class="imagemDoExercicio">
-          <img src="${exercicio.imagem}" alt="${exercicio.nome}" />
-        </div>
-        <div class="infosDoExercicio">
-          <div class="equipamento">
-            <span>${exercicio.equipamento}</span>
-            <span class="material-symbols-outlined" id="BtnSelecionarExercicio" style="cursor: pointer;">add</span>
-          </div>
-          <p>${exercicio.nome}</p>
-          <div class="dadosExercicio">
-            <div class="series"><span>3</span><p>Séries</p></div>
-            <div class="Repticoes"><span>15</span><p>Rep(s)</p></div>
-            <div class="Kg"><span>60</span><p>Kg(s)</p></div>
-          </div>
-        </div>`;
+  <div class="imagemDoExercicio">
+    <img src="${exercicio.imagem}" alt="${exercicio.nome}" />
+  </div>
+  <div class="infosDoExercicio">
+    <div class="equipamento">
+      <span>${exercicio.equipamento}</span>
+      <div class="separarBotoes">
+        <span class="material-symbols-outlined" id="BtnSelecionarExercicio" style="cursor: pointer;">add</span>
+        <button class="remover-exercicio-do-firestore" data-treino="${treinoSelecionadoId}" data-exercicio-id="${exercicio.id}">
+          <span class="material-symbols-outlined">delete</span>
+        </button>
+      </div>
+    </div>
+    <p>${exercicio.nome}</p>
+    <div class="dadosExercicio">
+      <div class="series"><span>3</span><p>Séries</p></div>
+      <div class="Repticoes"><span>15</span><p>Rep(s)</p></div>
+      <div class="Kg"><span>60</span><p>Kg(s)</p></div>
+    </div>
+  </div>`;
+
 
       listaExercicios.appendChild(novoExercicio);
     });
@@ -1390,6 +1396,53 @@ document.addEventListener("click", async function (event) {
 
     await removerExercicioDoFirestore(treinoId, exercicioId);
   });
+
+  // Event listener para o botão remover-exercicio-do-firestore
+document.addEventListener("click", async function (event) {
+  const btnRemover = event.target.closest(".remover-exercicio-do-firestore");
+  if (!btnRemover) return;
+
+  const exercicioId = btnRemover.getAttribute("data-exercicio-id");
+  if (!exercicioId) {
+    console.error("❌ Exercício ID não encontrado.");
+    return;
+  }
+
+  // Remove o elemento do DOM (do modal de Exercícios Disponíveis)
+  const exercicioElemento = btnRemover.closest(".exercicio");
+  if (exercicioElemento) {
+    exercicioElemento.remove();
+  }
+
+  // Chama a função para remover do Firestore
+  await removerExercicioDisponivelDoFirestore(exercicioId);
+});
+
+  // Função que remove o exercício do Firestore (da lista global de exercícios)
+async function removerExercicioDisponivelDoFirestore(exercicioId) {
+  const user = auth.currentUser;
+  if (!user) {
+    console.error("❌ Usuário não autenticado!");
+    return;
+  }
+  
+  const emailPrefix = user.email.split("@")[0];
+  const userDocRef = doc(db, emailPrefix, user.uid);
+  const docSnap = await getDoc(userDocRef);
+  
+  if (!docSnap.exists()) {
+    console.error("❌ Documento do usuário não encontrado.");
+    return;
+  }
+  
+  // Obtém o array de exercícios e filtra removendo o exercício com o ID informado
+  let exercicios = docSnap.data().exercicios || [];
+  exercicios = exercicios.filter(exercicio => exercicio.id !== exercicioId);
+  
+  // Atualiza o Firestore com a nova lista
+  await updateDoc(userDocRef, { exercicios });
+  console.log(`✅ Exercício removido do Firestore: ${exercicioId}`);
+}
 
   // ✅ Função para Remover Exercício do Firestore
   async function removerExercicioDoFirestore(treinoId, exercicioId) {
