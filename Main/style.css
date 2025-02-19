@@ -533,6 +533,7 @@ li.placeholder {
     padding-left: 1rem;
 }
 
+
 .infosDoExercicio p {
     font-weight: 800;
     font-size: 1.1rem;
@@ -546,6 +547,7 @@ li.placeholder {
 .equipamento {
     display: flex;
     justify-content: space-between;
+    padding-right: 1rem;
 }
 
 .equipamento span {
@@ -554,7 +556,6 @@ li.placeholder {
 }
 
 .equipamento .material-symbols-outlined {
-    margin-right: 1rem;
     font-size: 1.2rem;
 }
 
@@ -620,7 +621,7 @@ li.placeholder {
     justify-content: center;
 }
 
-.remover-exercicio {
+.remover-exercicio, .remover-exercicio-do-firestore {
     background-color: transparent;
     border: none;
 }
