@@ -1140,7 +1140,7 @@ li.placeholder {
       max-height: 60vh; /* Ajusta a altura para telas menores */
       padding-right: 5px; /* Ajuste para barra de rolagem */
       margin-right: -5px;
-      margin-bottom: 1rem;
+      margin-bottom: 2rem;
     }
   }
   
