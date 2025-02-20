@@ -1137,7 +1137,7 @@ li.placeholder {
 
 @media only screen and (max-width: 600px) {
     .lista-exercicios {
-      max-height: 50vh; /* Ajusta a altura para telas menores */
+      max-height: 62vh; /* Ajusta a altura para telas menores */
       padding-right: 5px; /* Ajuste para barra de rolagem */
       margin-right: -5px;
     }
