@@ -128,9 +128,29 @@ nav {
 }
 
 .lista-exercicios {
-    height: 100%;
+    height: auto;
     max-height: 55vh;
+    overflow-y: auto;
+    padding-right: 10px; /* Adicionado para evitar sobreposição com a barra de rolagem */
+    margin-right: -10px; /* Compensa o padding para alinhamento */
+    scrollbar-width: thin; /* Estilo da barra de rolagem para Firefox */
+    scrollbar-color: #67B232 transparent; /* Cor da barra de rolagem */
 }
+
+/* Estilo para Chrome, Safari e Edge */
+.lista-exercicios::-webkit-scrollbar {
+    width: 4px;
+}
+
+.lista-exercicios::-webkit-scrollbar-thumb {
+    background-color: #67B232;
+    border-radius: 10px;
+}
+
+.lista-exercicios::-webkit-scrollbar-track {
+    background: transparent;
+}
+
 
 .botoes {
     width: 100%;
