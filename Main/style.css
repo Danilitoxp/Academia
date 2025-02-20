@@ -133,6 +133,7 @@ nav {
     overflow-y: auto;
     padding-right: 10px; /* Adicionado para evitar sobreposição com a barra de rolagem */
     margin-right: -10px; /* Compensa o padding para alinhamento */
+    -webkit-overflow-scrolling: touch;
     scrollbar-width: thin; /* Estilo da barra de rolagem para Firefox */
     scrollbar-color: #67B232 transparent; /* Cor da barra de rolagem */
 }
@@ -1133,3 +1134,12 @@ li.placeholder {
     background-color: transparent;
     border: none;
 }
+
+@media only screen and (max-width: 600px) {
+    .lista-exercicios {
+      max-height: 50vh; /* Ajusta a altura para telas menores */
+      padding-right: 5px; /* Ajuste para barra de rolagem */
+      margin-right: -5px;
+    }
+  }
+  
