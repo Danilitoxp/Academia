@@ -58,85 +58,93 @@ document.addEventListener("DOMContentLoaded", function () {
   
 
   async function carregarDadosDoFirestore() {
+    // 🔐 Verifica se o usuário está autenticado
     onAuthStateChanged(auth, async (user) => {
       if (!user) {
-        console.warn("⚠️ Usuário não autenticado. Abortando carregamento.");
-        return;
+        console.warn("⚠️ Usuário não autenticado. Redirecionando para o login...");
+        // 🚀 Redireciona para a tela de login
+        window.location.href = "/index.html"; // Altere para o caminho correto do seu arquivo de login
+        return; // Interrompe a execução
       }
-
+  
       console.log("✅ Usuário autenticado:", user.email);
+  
       const emailPrefix = user.email.split("@")[0];
       const userDocRef = doc(db, emailPrefix, user.uid);
       const docSnap = await getDoc(userDocRef);
-
+  
       if (!docSnap.exists()) {
+        console.warn("⚠️ Documento do usuário não encontrado.");
         return;
       }
-
+  
       const dados = docSnap.data();
       const treinos = dados.treinos || [];
       const nomeUsuario = dados.username || "Usuário";
       const emailUsuario = dados.email || "Email não cadastrado";
-
+  
       // Atualiza as informações do usuário na interface
       document.getElementById("nomeUsuario").value = nomeUsuario;
       document.getElementById("emailUsuario").value = emailUsuario;
-
+  
       // Atualiza a lista de treinos
       const listaTreinos = document.querySelector(".Treinos main");
       listaTreinos.innerHTML = ""; // Limpa a lista antes de adicionar novos itens
-
+  
       treinos.forEach((treino) => {
         if (!treino || !treino.nome) {
           console.error("❌ ERRO: Treino indefinido ou sem nome.");
           return;
         }
-
+  
         // 🔹 Se gruposMusculares não existir, define como "Desconhecido"
         let gruposMusculares =
           Array.isArray(treino.gruposMusculares) &&
           treino.gruposMusculares.length > 0
             ? treino.gruposMusculares
             : ["desconhecido"];
-
+  
         // ✅ Criamos um novo elemento <div> para representar o treino
-        const treinoElement = document.createElement("div"); // <=== Definição corrigida
-        treinoElement.setAttribute("data-grupos", gruposMusculares.join(",")); // Agora `gruposMusculares` já está definido
+        const treinoElement = document.createElement("div");
+        treinoElement.setAttribute("data-grupos", gruposMusculares.join(","));
         treinoElement.classList.add("Treino");
         treinoElement.id = treino.nome.toLowerCase().replace(/\s+/g, "-");
-
+  
         let iconesHTML = gruposMusculares
           .map(
             (grupo) =>
               `<img src="/Main/img/${grupo}-icone.svg" alt="${grupo}" class="grupo-icone">`
           )
           .join("");
-
+  
         // ✅ Agora que treinoElement está definido, podemos atualizar o conteúdo dele
         treinoElement.innerHTML = `
-  <div class="icones">${iconesHTML}</div>
-  <div class="descricao">
-    <div class="descricaoInfo">
-        <h5>${treino.nome.toUpperCase()}</h5>
-      <p>Exercícios: ${
-        Array.isArray(treino.exercicios) ? treino.exercicios.length : 0
-      }</p>
-    </div>
-      <div class="excluir">
-        <button class="remover-treino" data-treino="${treinoElement.id}">
-            <span class="material-symbols-outlined">delete</span>
-        </button>
-      </div>
-  </div>
-`;
-
+          <div class="icones">${iconesHTML}</div>
+          <div class="descricao">
+            <div class="descricaoInfo">
+                <h5>${treino.nome.toUpperCase()}</h5>
+              <p>Exercícios: ${
+                Array.isArray(treino.exercicios)
+                  ? treino.exercicios.length
+                  : 0
+              }</p>
+            </div>
+              <div class="excluir">
+                <button class="remover-treino" data-treino="${treinoElement.id}">
+                    <span class="material-symbols-outlined">delete</span>
+                </button>
+              </div>
+          </div>
+        `;
+  
         console.log("✅ Treino carregado:", treino);
         listaTreinos.appendChild(treinoElement);
       });
-
+  
       console.log("✅ Dados carregados do Firestore!");
     });
   }
+  
 
   document.addEventListener("click", async function (event) {
     const btnRemoverTreino = event.target.closest(".remover-treino");
