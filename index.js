@@ -20,14 +20,24 @@ async function initializeAppData() {
     initializeCalendar();                      // Inicializa o calendário
 
     // Adicione aqui outros event listeners ou inicializações, por exemplo:
-    const leftButton = document.getElementById("esquerta");
+    // Botões de navegação do calendário
+    const leftButton =
+      document.getElementById("esquerda") ||
+      document.getElementById("esquerta");
     const rightButton = document.getElementById("direita");
 
-    leftButton.removeEventListener("click", () => changeMonth(-1));
-    rightButton.removeEventListener("click", () => changeMonth(1));
+    const goPrevMonth = () => changeMonth(-1);
+    const goNextMonth = () => changeMonth(1);
 
-    leftButton.addEventListener("click", () => changeMonth(-1));
-    rightButton.addEventListener("click", () => changeMonth(1));
+    if (leftButton) {
+      leftButton.removeEventListener("click", goPrevMonth);
+      leftButton.addEventListener("click", goPrevMonth);
+    }
+
+    if (rightButton) {
+      rightButton.removeEventListener("click", goNextMonth);
+      rightButton.addEventListener("click", goNextMonth);
+    }
 
     console.log("Aplicação inicializada com sucesso!");
   } catch (error) {
